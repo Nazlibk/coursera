@@ -1,0 +1,10 @@
+data<-read.table("household_power_consumption.txt", header=TRUE, sep=";", stringsAsFactors = FALSE, skip=66637, nrow=69517-66637+1, col.names = colnames(read.table("household_power_consumption.txt", sep=";", stringsAsFactors = FALSE, nrow = 1, header = TRUE)))
+x<-1:nrow(data)
+y<-data$Global_active_power
+xlabels<-c("Thu", "Fri", "Sat")
+at<-c(1, nrow(data)/2, nrow(data))
+png("plot2.png")
+plot(x,y, type="n", xlab="", ylab="Global Active Power (kilowattz)", xaxt = "n")
+axis(side=1, at=at,labels=xlabels)
+lines(x,y)
+dev.off()

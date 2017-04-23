@@ -1,0 +1,13 @@
+NEI <- readRDS("summarySCC_PM25.rds")
+SCC <- readRDS("Source_Classification_Code.rds")
+data1<-grepl("Coal", SCC$Short.Name)
+data2<-grepl("comb", SCC$Short.Name)
+data3<-grepl("combustion", SCC$Short.Name)
+mainIndex=(data1 | data2 | data3)
+data<-SCC[mainIndex, ]
+mdata<-merge(NEI, data, by="SCC")
+year<-c(1999, 2002, 2005, 2008)
+png("Plot4.png")
+CoalEmissions<-with(mdata, tapply(Emissions, year, mean,na.rm=T))
+plot(year, CoalEmissions, type='l', ylab = "Emissions from coal combustion-related sources")
+title(main="Emissions from coal combustion-related sources from 1999 to 2008")
